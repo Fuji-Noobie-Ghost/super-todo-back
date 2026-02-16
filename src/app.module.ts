@@ -3,11 +3,13 @@ import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
+      envFilePath: '.env'
     }),
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
@@ -17,12 +19,13 @@ import { resolve } from 'path';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        entities: [resolve(__dirname, '/**/*.entity{.js,.ts}')],
-        // synchronize: configService.get<string>('NODE_ENV') === 'production',
+        entities: [resolve(__dirname, '**/*.entity{.js,.ts}')],
         synchronize: false,
-      })
+      }),
+      inject: [ConfigService],
     }),
     TodoModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [],
