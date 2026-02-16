@@ -1,0 +1,19 @@
+services:
+  todo-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: todo-api-dev
+    image: todo-api:dev
+    volumes:
+      # ✅ Hot reload : monter le code source
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./nest-cli.json:/app/nest-cli.json
+      # ✅ Éviter d'écraser node_modules du container
+      - /app/node_modules
+
+  todo-db:
+    ports:
+      - "$DB_PORT:$DB_PORT"

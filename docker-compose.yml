@@ -1,0 +1,45 @@
+services:
+  todo-api:
+    build:
+      context: .
+    container_name: todo-api
+    image: todo-api:latest
+    ports:
+      - "$APP_PORT:$APP_PORT"
+    env_file:
+      - .env
+    depends_on:
+      todo-db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - todo-app-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:$APP_PORT/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  todo-db:
+    image: postgres:15-alpine
+    container_name: todo-db
+    environment:
+      POSTGRES_USER: $DB_USERNAME
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_NAME 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - todo-app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks:
+  todo-app-network:
+    driver: bridge

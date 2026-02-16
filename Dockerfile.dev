@@ -1,0 +1,18 @@
+FROM node:23-alpine
+
+WORKDIR /app
+
+ARG APP_PORT
+
+# Install pnpm
+RUN corepack enable pnpm
+
+COPY package.json pnpm-lock.yaml ./
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+COPY . .
+
+EXPOSE $APP_PORT
+
+CMD ["pnpm", "start:dev"]
