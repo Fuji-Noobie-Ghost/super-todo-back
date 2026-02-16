@@ -9,6 +9,7 @@ services:
       # ✅ Hot reload : monter le code source
       - ./src:/app/src
       - ./package.json:/app/package.json
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
       - ./tsconfig.json:/app/tsconfig.json
       - ./nest-cli.json:/app/nest-cli.json
       # ✅ Éviter d'écraser node_modules du container
