@@ -23,7 +23,11 @@ export class TodoService {
 
   async findAll(): Promise<Todo[]> {
     try {
-      const todos = await this.todoRepository.find()
+      const todos = await this.todoRepository.find({
+        order: {
+          createdAt: 'DESC'
+        }
+      })
       return todos
     } catch (error) {
       throw new InternalServerErrorException(error)

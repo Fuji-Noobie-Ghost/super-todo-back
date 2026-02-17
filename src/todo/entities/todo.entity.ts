@@ -21,6 +21,12 @@ export class Todo {
   })
   status: TodoStatus
 
+  @Column({
+    type: 'timestamp',
+    default: () => 'NOW()',
+  })
+  dueDate: Date
+
   @CreateDateColumn()
   createdAt: Date
 
