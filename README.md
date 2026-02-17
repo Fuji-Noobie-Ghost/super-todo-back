@@ -1,98 +1,215 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Super Todo Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A NestJS-based REST API for a Todo application with PostgreSQL database support.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- 📝 Full CRUD operations for todos
+- 🗄️ PostgreSQL database with TypeORM
+- 🐳 Docker support for easy deployment
+- ✅ Request validation with class-validator
+- 🏥 Health check endpoint
+- 🔄 Soft delete support
+- 📅 Due date tracking
+- 📊 Status tracking (PENDING, COMPLETED)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tech Stack
 
-## Project setup
+- **Framework**: NestJS 11
+- **Language**: TypeScript
+- **Database**: PostgreSQL 15
+- **ORM**: TypeORM
+- **Package Manager**: pnpm
+- **Container**: Docker
 
-```bash
-$ pnpm install
-```
+## Getting Started
 
-## Compile and run the project
+### Prerequisites
 
-```bash
-# development
-$ pnpm run start
+- Node.js (v20+)
+- pnpm
+- PostgreSQL (for local development without Docker)
+- Docker & Docker Compose (optional, for containerized development)
 
-# watch mode
-$ pnpm run start:dev
+### Installation
 
-# production mode
-$ pnpm run start:prod
-```
-
-## Run tests
+1. Clone the repository and install dependencies:
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+pnpm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+2. Copy the environment example file and configure it:
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+cp .env.example .env
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+3. Update the `.env` file with your configuration:
 
-## Resources
+```env
+NODE_ENV=development
+APP_PORT=3000
 
-Check out a few resources that may come in handy when working with NestJS:
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=your_password
+DB_NAME=super_todo
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Running with Docker (Recommended)
 
-## Support
+#### Using Helper Scripts
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+The project includes helper scripts in the `scripts/` directory for common Docker operations.
 
-## Stay in touch
+**First, make the scripts executable:**
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+chmod +x scripts/*.sh
+```
+
+**Then use them:**
+
+```bash
+# Development environment (uses docker-compose.dev.yml overrides)
+./scripts/start-dev.sh    # Start dev containers
+./scripts/stop-dev.sh     # Stop dev containers
+
+# Production environment
+./scripts/start-prod.sh   # Start production containers
+./scripts/stop-prod.sh    # Stop production containers
+```
+
+#### Manual Docker Commands
+
+```bash
+# Development environment
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down
+
+# Production environment
+docker compose -f docker-compose.yml up --build -d
+docker compose -f docker-compose.yml down
+```
+
+#### View Logs
+
+```bash
+# View all logs
+docker-compose logs -f
+
+# View specific service logs
+docker-compose logs -f todo-api
+docker-compose logs -f todo-db
+```
+
+### Running Locally
+
+```bash
+# Development mode with watch
+pnpm run start:dev
+
+# Production mode
+pnpm run start:prod
+
+# Debug mode
+pnpm run start:debug
+```
+
+## API Endpoints
+
+All endpoints are prefixed with `/api`
+
+### Health Check
+
+```
+GET /api/health
+```
+
+Returns the health status of the application.
+
+### Todos
+
+```
+POST   /api/todo       - Create a new todo
+GET    /api/todo       - Get all todos
+GET    /api/todo/:id   - Get a single todo by ID
+PATCH  /api/todo/:id   - Update a todo
+DELETE /api/todo/:id   - Soft delete a todo
+```
+
+#### Create Todo Request Body
+
+```json
+{
+  "title": "My Task",
+  "description": "Task description",
+  "status": "PENDING",
+  "dueDate": "2026-02-20T10:00:00Z"
+}
+```
+
+#### Todo Status Enum
+
+- `PENDING` - Task not yet started
+- `COMPLETED` - Task finished
+
+## Database Migrations
+
+```bash
+# Generate a new migration
+pnpm run migration:generate -- src/database/migrations/<migration-name>
+
+# Run pending migrations
+pnpm run migration:run
+
+# Revert the last migration
+pnpm run migration:revert
+
+# Run migrations in production
+pnpm run prod:migration:run
+```
+
+## Project Structure
+
+```
+src/
+├── database/
+│   ├── migrations/      # Database migrations
+│   └── data-source.ts   # TypeORM data source configuration
+├── health/
+│   ├── health.controller.ts
+│   └── health.module.ts
+├── todo/
+│   ├── dto/             # Data Transfer Objects
+│   ├── entities/        # TypeORM entities
+│   ├── enums/           # TypeScript enums
+│   ├── todo.controller.ts
+│   ├── todo.module.ts
+│   └── todo.service.ts
+├── app.module.ts
+└── main.ts
+```
+
+## Build
+
+```bash
+# Build for production
+pnpm run build
+```
+
+## Code Quality
+
+```bash
+# Format code
+pnpm run format
+
+# Lint code
+pnpm run lint
+```
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is [UNLICENSED](LICENSE).
