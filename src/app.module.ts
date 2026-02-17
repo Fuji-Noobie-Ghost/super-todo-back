@@ -21,6 +21,8 @@ import { HealthModule } from './health/health.module';
         database: configService.get<string>('DB_NAME'),
         entities: [resolve(__dirname, '**/*.entity{.js,.ts}')],
         synchronize: false,
+        migrationsRun: true, // Automatically run migrations on startup
+        migrations: [resolve(__dirname + '**/database/migrations/*{.ts,.js}')], // Path to your migration files
       }),
       inject: [ConfigService],
     }),
