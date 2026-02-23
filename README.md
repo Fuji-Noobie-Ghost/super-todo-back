@@ -56,6 +56,10 @@ DB_PORT=5432
 DB_USERNAME=postgres
 DB_PASSWORD=your_password
 DB_NAME=super_todo
+
+LLM_API_KEY=
+LLM_MODEL=
+LLM_TEMPERATURE=
 ```
 
 ### Running with Docker (Recommended)
