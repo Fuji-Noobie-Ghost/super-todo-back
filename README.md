@@ -12,6 +12,7 @@ A NestJS-based REST API for a Todo application with PostgreSQL database support.
 - 🔄 Soft delete support
 - 📅 Due date tracking
 - 📊 Status tracking (PENDING, COMPLETED)
+- 🤖 AI-powered suggestions for todo descriptions and due dates (powered by Groq)
 
 ## Tech Stack
 
@@ -57,10 +58,14 @@ DB_USERNAME=postgres
 DB_PASSWORD=your_password
 DB_NAME=super_todo
 
-LLM_API_KEY=
-LLM_MODEL=
-LLM_TEMPERATURE=
+# AI Suggestion Feature (Groq)
+# Get your API key from https://console.groq.com/keys
+LLM_API_KEY=your_groq_api_key
+LLM_MODEL=llama-3.3-70b-versatile
+LLM_TEMPERATURE=0.7
 ```
+
+**Note:** The AI suggestion feature requires a Groq API key. You can get one for free at [Groq Console](https://console.groq.com/keys). If you don't want to use AI suggestions, you can leave `LLM_API_KEY` empty.
 
 ### Running with Docker (Recommended)
 
@@ -142,6 +147,7 @@ GET    /api/todo       - Get all todos
 GET    /api/todo/:id   - Get a single todo by ID
 PATCH  /api/todo/:id   - Update a todo
 DELETE /api/todo/:id   - Soft delete a todo
+POST   /api/todo/suggest - AI-suggest todo description and due date
 ```
 
 #### Create Todo Request Body
@@ -152,6 +158,24 @@ DELETE /api/todo/:id   - Soft delete a todo
   "description": "Task description",
   "status": "PENDING",
   "dueDate": "2026-02-20T10:00:00Z"
+}
+```
+
+#### AI Suggest Todo Detail Request Body
+
+```json
+{
+  "title": "Reply to client email"
+}
+```
+
+#### AI Suggest Todo Detail Response
+
+```json
+{
+  "description": "Draft and send a professional response to the client's inquiry regarding project timeline and deliverables.",
+  "suggestedDateTime": "2026-02-23T17:00:00Z",
+  "reasoning": "Email responses should be handled same day by end of workday."
 }
 ```
 
